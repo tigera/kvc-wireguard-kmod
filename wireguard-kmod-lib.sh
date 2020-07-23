@@ -63,6 +63,9 @@ build_kmod_container() {
         --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION} \
         --build-arg WIREGUARD_SHA256=${WIREGUARD_SHA256} \
         --build-arg WIREGUARD_KERNEL_VERSION=${WIREGUARD_KERNEL_VERSION} \
+        --build-arg KERNEL_CORE_RPM=${KERNEL_CORE_RPM} \
+        --build-arg KERNEL_DEVEL_RPM=${KERNEL_DEVEL_RPM} \
+        --build-arg KERNEL_MODULES_RPM=${KERNEL_MODULES_RPM} \
         ${KMOD_CONTAINER_BUILD_CONTEXT}
 
     # get rid of any dangling containers if they exist
