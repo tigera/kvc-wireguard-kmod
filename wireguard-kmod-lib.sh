@@ -52,7 +52,6 @@ source "/etc/kvc/${KVC_SOFTWARE_NAME}.conf"
 # combination of the module software name/version and the targeted
 # kernel version.
 IMAGE="${KVC_SOFTWARE_NAME}-${KMOD_SOFTWARE_VERSION}:${KVC_KVER}"
-WIREGUARD_KERNEL_VERSION=$(uname -r)
 
 build_kmod_container() {
     echo "Building ${IMAGE} kernel module container..."
