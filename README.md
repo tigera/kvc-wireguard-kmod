@@ -23,11 +23,11 @@ The intended utility of this repository is for fulfilling some of the Openshift 
 
 ## Compatibility table
 
-Wireguard snapshots vs kernel version compatibility for [atomic-wireguard](https://github.com/projectcalico/) kvc build system
+WireGuard snapshots vs kernel version compatibility for [atomic-wireguard](https://github.com/projectcalico/) kvc build system
 
 This may aid in populating the [wireguard-kmod.conf](wireguard-kmod.conf). However, please always use the [latest wireguard snapshot](https://git.zx2c4.com/wireguard-linux-compat/) vs the latest kernel version (by running `uname -r` on your cluster).
 
-| Wireguard Snapshot | Wireguard Sha256 | Kernel Version |
+| WIREGUARD_VERSION | WIREGUARD_SHA256 | WIREGUARD_KERNEL_VERSION |
 |---|---|---|
 | 1.0.20210219 | 99d35296b8d847a0d4db97a4dda96b464311a6354e75fe0bef6e7c4578690f00 | 4.18.0-240.15.1.el8_3.x86_64 |
 | 1.0.20200520 | 16e7ae4bef734b243428eea07f3b3c3d4721880c3ea8eb8f98628fd6ae5b77c3 | 4.18.0-193.28.1.el8_2.x86_64 |
