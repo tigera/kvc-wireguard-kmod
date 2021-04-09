@@ -95,28 +95,8 @@ build_kmods() {
     else
         build_kmod_container
     fi
-
-    # Sanity checks for each module to load
-    for module in ${KMOD_NAMES}; do
-        module=${module//_/-} # replace any underscores with dash
-        # Sanity check to make sure the built kernel modules were really
-        # built against the correct module software version
-        # Note the tr to delete the trailing carriage return
-        x=$(kvc_c_run $IMAGE modinfo -F version "/lib/modules/${KVC_KVER}/${module}.ko" | \
-                                                                            tr -d '\r')
-        if [ "${x}" != "${KMOD_SOFTWARE_VERSION}" ]; then
-            echo "Module version mismatch within container. rebuilding ${IMAGE}"
-            build_kmod_container
-        fi
-        # Sanity check to make sure the built kernel modules were really
-        # built against the desired kernel version
-        x=$(kvc_c_run $IMAGE modinfo -F vermagic "/lib/modules/${KVC_KVER}/${module}.ko" | \
-                                                                        cut -d ' ' -f 1)
-        if [ "${x}" != "${KVC_KVER}" ]; then
-            echo "Module not built against ${KVC_KVER}. rebuilding ${IMAGE}"
-            build_kmod_container
-        fi
-    done
+    
+    # No need sanity checks anymore
 }
 
 load_kmods() {
