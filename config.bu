@@ -1,0 +1,9 @@
+variant: openshift
+version: 4.8.0
+storage:
+  trees:
+  - local: root
+metadata:
+  name: 10-kvc-wireguard-kmod
+  labels:
+    machineconfiguration.openshift.io/role: worker
