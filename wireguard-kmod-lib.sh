@@ -89,14 +89,7 @@ is_kmod_loaded() {
 }
 
 build_kmods() {
-    # Check to see if it's already built
-    if [ ! -z "$(kvc_c_images $IMAGE --quiet 2>/dev/null)" ]; then
-        echo "The ${IMAGE} kernel module container is already built"
-    else
-        build_kmod_container
-    fi
-    
-    # No need sanity checks anymore
+    build_kmod_container
 }
 
 load_kmods() {
