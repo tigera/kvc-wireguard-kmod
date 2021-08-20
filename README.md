@@ -32,3 +32,30 @@ This may aid in populating the [wireguard-kmod.conf](wireguard-kmod.conf). Howev
 | 1.0.20210606 | 60850724988809d7ff9065848b830859b2f57c1366b0ce37af2d37138f540f49 | 4.18.0-240.22.1.el8_3.x86_64 |
 | 1.0.20210219 | 99d35296b8d847a0d4db97a4dda96b464311a6354e75fe0bef6e7c4578690f00 | 4.18.0-240.15.1.el8_3.x86_64 |
 | 1.0.20200520 | 16e7ae4bef734b243428eea07f3b3c3d4721880c3ea8eb8f98628fd6ae5b77c3 | 4.18.0-193.28.1.el8_2.x86_64 |
+
+
+
+## EXPERIMENTAL: Trying out latest wireguard-linux-compat (master)
+
+If your OCP workerskernel is newer than any of the above tested options, please try the latest [wireguard backport](https://git.zx2c4.com/wireguard-linux-compat) master version.
+
+    # download latest wireguard code first
+    wget https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-master.tar.xz
+
+    # the first part of the output of the following command goes into wireguard-kmod.conf at variable WIREGUARD_SHA256
+    sha256sum wireguard-linux-compat-master.tar.xz
+
+
+| WIREGUARD_VERSION | WIREGUARD_SHA256 | WIREGUARD_KERNEL_VERSION |
+|---|---|---|
+| master | see commands above | `uname -r` output of your OCP workers |
+
+
+To troubleshoot and debug to see if this has produced any build errors during the kmods-via-containers service build phase, this can be done via `oc debug`:
+
+1. `$ oc debug node/<node-name>`
+2. `# chroot /host`
+3. `# bash`
+4. `$ journalctl --unit=kmods-via-containers@wireguard-kmod.service -n 1000 --no-pager`
+
+Submit issues here: https://github.com/tigera/kvc-wireguard-kmod/issues/new 
