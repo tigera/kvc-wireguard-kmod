@@ -37,7 +37,7 @@ This may aid in populating the [wireguard-kmod.conf](wireguard-kmod.conf). Howev
 
 ## EXPERIMENTAL: Trying out latest wireguard-linux-compat (master)
 
-If your OCP workerskernel is newer than any of the above tested options, please try the latest [wireguard backport](https://git.zx2c4.com/wireguard-linux-compat) master version.
+If your OCP workers' kernel is newer than any of the above tested options, please try the latest [wireguard backport](https://git.zx2c4.com/wireguard-linux-compat) master version.
 
     # download latest wireguard code first
     wget https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-master.tar.xz
@@ -54,8 +54,19 @@ If your OCP workerskernel is newer than any of the above tested options, please 
 To troubleshoot and debug to see if this has produced any build errors during the kmods-via-containers service build phase, this can be done via `oc debug`:
 
 1. `$ oc debug node/<node-name>`
-2. `# chroot /host`
-3. `# bash`
-4. `$ journalctl --unit=kmods-via-containers@wireguard-kmod.service -n 1000 --no-pager`
+1. `# chroot /host`
+1. `# bash`
+1. `$ journalctl --unit=kmods-via-containers@wireguard-kmod.service -n 1000 --no-pager`
 
 Submit issues here: https://github.com/tigera/kvc-wireguard-kmod/issues/new 
+
+
+## TROUBLESHOOTING
+
+1. `oc apply -f mc-wg.yaml` but nothing is happening!
+
+    check machine-config-operator output for details: `oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-controller --since=3h -f`
+
+1. `butane` ignition config output is too new for my cluster
+    
+    consider manually editing the resulting `mc-wg.yaml` file's `config.ignition.version` field value from `3.2.0` to `2.2.0`. Or, alternatively, [consult the Butane Config spec documentation](https://coreos.github.io/butane/specs/) for more information on editing [config.bu](config.bu).
