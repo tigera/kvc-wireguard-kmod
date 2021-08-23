@@ -9,4 +9,4 @@ install:
 	install -v -m 755 wireguard-kmod-wrapper.sh $(FAKEROOT)/root/etc/kvc/lib/kvc/
 
 ignition:
-	butane --pretty -d $(FAKEROOT) < config.bu
+	@butane --pretty -d $(FAKEROOT) < config.bu
