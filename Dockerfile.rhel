@@ -1,5 +1,5 @@
 # builder
-FROM fedora as builder
+FROM registry.access.redhat.com/ubi8:latest as builder
 
 ARG WIREGUARD_VERSION
 ARG WIREGUARD_KERNEL_VERSION
