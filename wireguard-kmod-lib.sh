@@ -51,21 +51,20 @@ source "/etc/kvc/${KVC_SOFTWARE_NAME}.conf"
 # The name of the container image to consider. It will be a unique
 # combination of the module software name/version and the targeted
 # kernel version.
-IMAGE="${KVC_SOFTWARE_NAME}-${KMOD_SOFTWARE_VERSION}:${KVC_KVER}"
+IMAGE="${KVC_SOFTWARE_NAME}-${KMOD_SOFTWARE_VERSION}:${WIREGUARD_KERNEL_VERSION}"
 
 build_kmod_container() {
     echo "Building ${IMAGE} kernel module container..."
-    kvc_c_build -t ${IMAGE}                          \
-        --file ${KMOD_CONTAINER_BUILD_FILE}          \
-        --label="name=${KVC_SOFTWARE_NAME}"          \
-        --build-arg KVER=${KVC_KVER}                 \
-        --build-arg KMODVER=${KMOD_SOFTWARE_VERSION} \
-        --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION} \
-        --build-arg WIREGUARD_SHA256=${WIREGUARD_SHA256} \
+    kvc_c_build -t ${IMAGE}                                     \
+        --privileged                                            \
+        --file ${KMOD_CONTAINER_BUILD_FILE}                     \
+        --label="name=${KVC_SOFTWARE_NAME}"                     \
+        --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION}      \
+        --build-arg WIREGUARD_SHA256=${WIREGUARD_SHA256}        \
         --build-arg WIREGUARD_KERNEL_VERSION=${WIREGUARD_KERNEL_VERSION} \
-        --build-arg KERNEL_CORE_RPM=${KERNEL_CORE_RPM} \
-        --build-arg KERNEL_DEVEL_RPM=${KERNEL_DEVEL_RPM} \
-        --build-arg KERNEL_MODULES_RPM=${KERNEL_MODULES_RPM} \
+        --volume /etc/pki:/etc/pki:ro                           \
+        --volume /etc/rhsm/:/etc/rhsm:ro                        \
+        --volume /etc/yum.repos.d/:/etc/yum.repos.d/:ro         \
         ${KMOD_CONTAINER_BUILD_CONTEXT}
 
     # get rid of any dangling containers if they exist
