@@ -56,7 +56,6 @@ IMAGE="${KVC_SOFTWARE_NAME}-${KMOD_SOFTWARE_VERSION}:${WIREGUARD_KERNEL_VERSION}
 build_kmod_container() {
     echo "Building ${IMAGE} kernel module container..."
     kvc_c_build -t ${IMAGE}                                     \
-        --privileged                                            \
         --file ${KMOD_CONTAINER_BUILD_FILE}                     \
         --label="name=${KVC_SOFTWARE_NAME}"                     \
         --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION}      \
