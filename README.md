@@ -5,6 +5,15 @@ This is a [kmods-via-containers](https://github.com/kmods-via-containers/kmods-v
 The intended utility of this repository is for fulfilling some of the Openshift encrypt cluster traffic steps here: https://docs.projectcalico.org/security/encrypt-cluster-pod-traffic#install-wireguard
 
 
+# Quickstart
+
+1. Edit [wireguard-kmod.conf](wireguard-kmod.conf)
+1. `export FAKEROOT=$(mktemp -d)`
+1. `make -C kmods-via-container install FAKEROOT=$FAKEROOT`
+1. `make -C kvc-wireguard-kmod install FAKEROOT=$FAKEROOT`
+1. `make -sC kvc-wireguard-kmod FAKEROOT=$FAKEROOT ignition > mc-wg.yaml` 
+
+
 ## Quick config variables guide
 
 

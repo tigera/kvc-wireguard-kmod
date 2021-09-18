@@ -61,9 +61,6 @@ build_kmod_container() {
         --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION}      \
         --build-arg WIREGUARD_SHA256=${WIREGUARD_SHA256}        \
         --build-arg WIREGUARD_KERNEL_VERSION=${WIREGUARD_KERNEL_VERSION} \
-        --volume /etc/pki:/etc/pki:ro                           \
-        --volume /etc/rhsm/:/etc/rhsm:ro                        \
-        --volume /etc/yum.repos.d/:/etc/yum.repos.d/:ro         \
         ${KMOD_CONTAINER_BUILD_CONTEXT}
 
     # get rid of any dangling containers if they exist

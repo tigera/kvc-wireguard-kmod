@@ -7,6 +7,10 @@ ARG WIREGUARD_SHA256
 
 WORKDIR /tmp
 
+ADD ./pki /etc/pki
+ADD ./rhsm /etc/rhsm
+ADD ./yum.repos.d /etc/yum.repos.d
+
 RUN dnf --disablerepo=* --enablerepo=rhel-8-for-x86_64-baseos-rpms update -y && \
     dnf install -y \
         libmnl-devel elfutils-libelf-devel findutils binutils boost-atomic boost-chrono \
