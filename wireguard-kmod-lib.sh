@@ -94,7 +94,7 @@ load_kmods() {
             echo "Kernel module ${module} already loaded"
         else
             module=${module//-/_} # replace any dashes with underscore
-            kvc_c_run --privileged $IMAGE modprobe ${module}
+            kvc_c_run --privileged $IMAGE modprobe -S ${WIREGUARD_KERNEL_VERSION} ${module}
         fi
     done
 }
