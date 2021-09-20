@@ -52,6 +52,8 @@ source "/etc/kvc/${KVC_SOFTWARE_NAME}.conf"
 # combination of the module software name/version and the targeted
 # kernel version.
 IMAGE="${KVC_SOFTWARE_NAME}-${KMOD_SOFTWARE_VERSION}:${WIREGUARD_KERNEL_VERSION}"
+WIREGUARD_DEFAULT_ARCHIVE_LOCATION="https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-${WIREGUARD_VERSION}.tar.xz"
+WIREGUARD_LINUX_COMPAT_ARCHIVE_LOCATION="${WIREGUARD_ARCHIVE_LOCATION:-$WIREGUARD_DEFAULT_ARCHIVE_LOCATION}"
 
 build_kmod_container() {
     echo "Building ${IMAGE} kernel module container..."
@@ -61,6 +63,7 @@ build_kmod_container() {
         --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION}      \
         --build-arg WIREGUARD_SHA256=${WIREGUARD_SHA256}        \
         --build-arg WIREGUARD_KERNEL_VERSION=${WIREGUARD_KERNEL_VERSION} \
+        --build-arg WIREGUARD_LINUX_COMPAT_ARCHIVE_LOCATION=${WIREGUARD_LINUX_COMPAT_ARCHIVE_LOCATION} \
         ${KMOD_CONTAINER_BUILD_CONTEXT}
 
     # get rid of any dangling containers if they exist
