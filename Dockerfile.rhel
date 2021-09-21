@@ -4,6 +4,7 @@ FROM registry.access.redhat.com/ubi8/ubi:latest as builder
 ARG WIREGUARD_VERSION
 ARG WIREGUARD_KERNEL_VERSION
 ARG WIREGUARD_SHA256
+ARG WIREGUARD_LINUX_COMPAT_ARCHIVE_LOCATION
 
 WORKDIR /tmp
 
@@ -22,7 +23,7 @@ RUN dnf --disablerepo=* --enablerepo=rhel-8-for-x86_64-baseos-rpms update -y && 
         kernel-devel-${WIREGUARD_KERNEL_VERSION} \
         kernel-modules-${WIREGUARD_KERNEL_VERSION}
         
-RUN curl -LS https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-${WIREGUARD_VERSION}.tar.xz | \
+RUN curl -LS ${WIREGUARD_LINUX_COMPAT_ARCHIVE_LOCATION} | \
         { t="$(mktemp)"; trap "rm -f '$t'" INT TERM EXIT; cat >| "$t"; sha256sum --quiet -c <<<"${WIREGUARD_SHA256} $t" \
         || exit 1; cat "$t"; } | tar xJf -
 
