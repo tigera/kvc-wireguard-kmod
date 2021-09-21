@@ -61,7 +61,7 @@ build_kmod_container() {
         --build-arg WIREGUARD_VERSION=${WIREGUARD_VERSION}      \
         --build-arg WIREGUARD_SHA256=${WIREGUARD_SHA256}        \
         --build-arg WIREGUARD_KERNEL_VERSION=${WIREGUARD_KERNEL_VERSION} \
-        --volume /host/var/wireguard-rpms:/tmp:ro \
+        --volume /var/wireguard-rpms:/tmp:ro \
         ${KMOD_CONTAINER_BUILD_CONTEXT}
 
     # get rid of any dangling containers if they exist
