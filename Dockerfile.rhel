@@ -8,12 +8,7 @@ ARG WIREGUARD_LINUX_COMPAT_ARCHIVE_LOCATION
 
 WORKDIR /tmp
 
-ADD ./pki /etc/pki
-ADD ./rhsm /etc/rhsm
-ADD ./yum.repos.d /etc/yum.repos.d
-
-RUN dnf --disablerepo=* --enablerepo=rhel-8-for-x86_64-baseos-rpms update -y && \
-    dnf install -y \
+RUN dnf update -y && dnf install -y \
         libmnl-devel elfutils-libelf-devel findutils binutils boost-atomic boost-chrono \
         boost-date-time boost-system boost-thread cpp dyninst efivar-libs gc \
         gcc glibc-devel glibc-headers guile isl libatomic_ops libdwarf libmpc \
