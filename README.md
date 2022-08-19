@@ -7,11 +7,28 @@ The intended utility of this repository is for fulfilling some of the Openshift 
 
 # Quickstart
 
-1. Edit [wireguard-kmod.conf](wireguard-kmod.conf)
+In your work directory:
+
+1. clone [Tigera's fork of kmods-via-containers](https://github.com/tigera/kmods-via-containers)
+
+```
+    git clone https://github.com/tigera/kmods-via-containers
+```
+
+1. clone this repository also 
+
+```
+    git clone https://github.com/tigera/kvc-wireguard-kmod
+```
+1. Edit [kvc-wireguard-kmod/wireguard-kmod.conf](wireguard-kmod.conf) so that the variables correspond to the data below that matches your cluster `uname -r`
+
+  Please refer to the following sections below for Quick Config Variables Guide and Compatibility Table.
+
 1. `export FAKEROOT=$(mktemp -d)`
 1. `make -C kmods-via-container install FAKEROOT=$FAKEROOT`
 1. `make -C kvc-wireguard-kmod install FAKEROOT=$FAKEROOT`
 1. `make -sC kvc-wireguard-kmod FAKEROOT=$FAKEROOT ignition > mc-wg.yaml` 
+1. `oc apply -f mc-wg.yaml`
 
 
 ## Quick config variables guide
@@ -31,6 +48,8 @@ This may aid in populating the [wireguard-kmod.conf](wireguard-kmod.conf). Howev
 
 | WIREGUARD_VERSION | WIREGUARD_SHA256 | WIREGUARD_KERNEL_VERSION | actual uname -r |
 |---|---|---|---|
+| 1.0.20220627 | 362d412693c8fe82de00283435818d5c5def7f15e2433a07a9fe99d0518f63c0 | 4.18.0-305.el8.x86_64 | 4.18.0-305.49.1.el8_4.x86_64 |
+| 1.0.20211208 | c0e607138a17daac656f508d8e63ea3737b5221fa5d9288191ddeb099f5a3b92 | 4.18.0-305.el8.x86_64 | 4.18.0-305.30.1.el8_4.x86_64 | 
 | 1.0.20210606 | 3f5d990006e6eabfd692d925ec314fff2c5ee7dcdb869a6510d579acfdd84ec0 | 4.18.0-305.el8.x86_64 | 4.18.0-305.19.1.el8_4.x86_64 |
 | 1.0.20210606 | 3f5d990006e6eabfd692d925ec314fff2c5ee7dcdb869a6510d579acfdd84ec0 | 4.18.0-240.el8.x86_64 | 4.18.0-240.22.1.el8_3.x86_64 |
 | 1.0.20210219 | 99d35296b8d847a0d4db97a4dda96b464311a6354e75fe0bef6e7c4578690f00 | 4.18.0-240.el8.x86_64 | 4.18.0-240.15.1.el8_3.x86_64 |
